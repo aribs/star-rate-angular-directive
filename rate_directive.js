@@ -5,18 +5,8 @@
   angular
     .module('app', [])
     .controller('RatingController', RatingController)
-    .directive('starRating', starRating);
-
-  function RatingController() {
-    this.rating1 = 5;
-    this.isReadonly = false;
-    this.rateFunction = function(rating) {
-      console.log('Rating selected: ' + rating);
-    };
-  }
-
-  function starRating() {
-    return {
+    .directive('starRating', function ($http) {
+      return {
       restrict: 'EA',
       template:
         '<p class="titleRating">Deja tu Valoración</p>' +
@@ -71,9 +61,25 @@
             'rating': scope.ratingValue,
             'textRating': textRating
           }
-         
+          $http.post('/url to post/')
+            .success(function (data) {
+              console.log('works')
+            })
+            .error(function (error) {
+              console.log(error);
+            });
+
         }
       }
     };
+    });
+
+  function RatingController() {
+    this.rating1 = 5;
+    this.isReadonly = false;
+    this.rateFunction = function(rating) {
+      console.log('Rating selected: ' + rating);
+    };
   }
+
 })();
